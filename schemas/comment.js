@@ -1,23 +1,24 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const commentsSchema = new mongoose.Schema({
-  commentId: {
-    type: Number,
-    required: true,
-    unique: true
-  },
   commentContents: {
-    type: String,
-    required: true
-  },
-  commentDate: {
-    type: Number,
-    required: true
+    type: String
   },
   commentPassword: {
     type: String,
     required: true
+  },
+  postId: {
+    type: String
+  },
+  user: {
+    type: String,
+    required: true
   }
-});
+}
+,{timestamps:true}
+);
 
+commentsSchema.plugin(AutoIncrement, {inc_field: 'commentId'});
 module.exports = mongoose.model("comments", commentsSchema);

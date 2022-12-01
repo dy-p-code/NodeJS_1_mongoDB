@@ -1,11 +1,8 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
+const AutoIncrement = require('mongoose-sequence')(mongoose);
+// mongoose sequence (숫자 자동 증가)
 
 const postsSchema = new mongoose.Schema({
-  postId: {
-    type: Number,
-    required: true,
-    unique: true
-  },
   title: {
     type: String,
     required: true
@@ -13,10 +10,6 @@ const postsSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-  },
-  postsDate: {
-    type: Number,
-    required: true
   },
   password: {
     type: String,
@@ -26,6 +19,10 @@ const postsSchema = new mongoose.Schema({
     type: String,
     required: true
   }
-});
+}
+,{timestamps:true}
+);
 
+postsSchema.plugin(AutoIncrement, {inc_field: 'postId'});
+// mongoose sequence (숫자 자동 증가)
 module.exports = mongoose.model("posts", postsSchema);
